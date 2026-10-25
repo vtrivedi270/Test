@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stationery Hub – SPFx App Preview</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;
+--bg:#f3f4f8;--card:#fff;--ink:#1f2433;--mut:#5b6275;--line:#e3e6ee;--pri:#4338ca;--pri2:#6366f1;--side:#1e1b4b;--sideink:#c7d2fe;--ok:#15803d;--bad:#dc2626;--soft:#eef2ff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0f1220;--card:#181c2e;--ink:#e8eaf3;--mut:#a1a8c0;--line:#2a2f47;--pri:#818cf8;--pri2:#a5b4fc;--side:#0a0c18;--sideink:#a5b4fc;--soft:#222850}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0f1220;--card:#181c2e;--ink:#e8eaf3;--mut:#a1a8c0;--line:#2a2f47;--pri:#818cf8;--pri2:#a5b4fc;--side:#0a0c18;--sideink:#a5b4fc;--soft:#222850}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:14px/1.45 "Segoe UI",system-ui,Arial,sans-serif}
+.shell{display:flex;min-height:100%}
+.side{width:224px;background:var(--side);color:var(--sideink);padding:18px 12px;display:flex;flex-direction:column;gap:4px;flex:none}
+.brand{display:flex;gap:10px;align-items:center;color:#fff;font-weight:700;font-size:16px;padding:4px 10px 18px}
+.logo{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#6366f1,#a855f7);display:grid;place-items:center}
+.nav{display:flex;gap:10px;align-items:center;padding:11px 12px;border-radius:9px;cursor:pointer;color:var(--sideink);border:0;background:none;font:inherit;text-align:left;min-height:44px}
+.nav:hover{background:rgba(255,255,255,.08)}.nav.on{background:var(--pri);color:#fff}
+.nav svg,.ic{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 24px;background:var(--card);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.crumb{font-size:12px;color:var(--mut)}.who{display:flex;gap:10px;align-items:center}
+.av{width:34px;height:34px;border-radius:50%;background:var(--pri);color:#fff;display:grid;place-items:center;font-weight:600}
+select,input,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px;min-height:40px;max-width:100%}
+select:focus,input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--pri2);outline-offset:1px}
+.page{padding:24px;display:flex;flex-direction:column;gap:18px;max-width:1280px;width:100%}
+h1{font-size:22px;margin:0}h2{font-size:15px;margin:0 0 12px}
+.row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}.grow{flex:1;min-width:260px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 1px 2px rgba(20,20,60,.04)}
+.kpi{flex:1;min-width:170px;position:relative;overflow:hidden}.kpi b{display:block;font-size:28px;margin-top:4px}
+.kpi i{position:absolute;right:-14px;top:-14px;width:70px;height:70px;border-radius:50%;opacity:.18}
+.mut{color:var(--mut);font-size:12px}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:9px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;min-height:44px}
+.btn:hover{filter:brightness(1.1)}.btn.g{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn.d{background:var(--bad)}.btn.s{min-height:34px;padding:6px 12px}
+.chip{display:inline-block;border-radius:20px;padding:2px 10px;font-size:12px;color:#fff;white-space:nowrap}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{padding:10px 16px;border:0;background:none;color:var(--mut);font:inherit;cursor:pointer;border-bottom:2px solid transparent;min-height:44px;white-space:nowrap}
+.tab.on{color:var(--pri);border-color:var(--pri);font-weight:600}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse}th{font-size:12px;color:var(--mut);text-align:left;font-weight:600}
+th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+tbody tr.cl{cursor:pointer}tbody tr.cl:hover{background:var(--soft)}
+.bar{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--pri),#a855f7)}
+.cols{display:flex;align-items:flex-end;gap:16px;height:150px}.cols div{flex:1;text-align:center}.cols span{display:block;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#a855f7,var(--pri))}
+.tl{display:flex;flex-direction:column;gap:0}.st{display:flex;gap:12px}.dot{width:14px;height:14px;border-radius:50%;margin-top:4px;flex:none;border:2px solid var(--card);box-shadow:0 0 0 2px var(--line)}
+.ln{width:2px;background:var(--line);margin:0 6px 0 -19px;flex:none}.st>div:last-child{padding-bottom:16px}
+.lab{display:block;font-size:12px;color:var(--mut);margin-bottom:4px}.fld{flex:1;min-width:150px}
+.ov{position:fixed;inset:0;background:rgba(10,10,30,.55);display:grid;place-items:center;padding:16px;z-index:50}.mo{background:var(--card);border-radius:14px;padding:22px;width:min(520px,100%);max-height:90%;overflow:auto}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:10px;z-index:60}
+@media(max-width:820px){.shell{flex-direction:column}.side{width:100%;flex-direction:row;overflow-x:auto;padding:8px}.brand{display:none}.page,.top{padding:14px}}
+</style>
+</head>
+<body>
+<div class="shell"><nav class="side" id="side" aria-label="Main"></nav>
+<div class="main"><header class="top" id="top"></header><main class="page" id="app"></main></div></div>
+<div id="mo"></div>
+<script>
+var $=function(s){return document.querySelector(s)};
+var ST={Draft:['Draft','#6b7280'],InReview:['In review','#2563eb'],AmendRequired:['Amend required','#c2410c'],Rejected:['Rejected','#dc2626'],HRApproval:['HR approval','#7c3aed'],Ordered:['Ordered','#0f766e'],Delivered:['Delivered','#4f46e5'],Closed:['Closed','#15803d'],PartialClosed:['Partial closed','#b45309']};
+var CH=['RM','DH','DV'],SG={RM:'Reporting Manager',DH:'Dept Head',DV:'Division Head',HRAD:'HRAD',Requestor:'Requestor'};
+var ROLES=[['Requestor','Vishal (Requestor)'],['RM','Reporting Manager'],['DH','Dept Head'],['DV','Division Head'],['HRAD','HRAD'],['Admin','Admin']];
+var M={items:[{code:'STN001',name:'A4 Paper Ream',unit:'Ream',rate:280,stock:12},{code:'STN002',name:'Ball Pen Blue',unit:'Nos',rate:10,stock:180},{code:'STN003',name:'Stapler Pins',unit:'Box',rate:35,stock:6},{code:'STN004',name:'Spiral Notebook',unit:'Nos',rate:60,stock:44},{code:'STN005',name:'Marker Set',unit:'Set',rate:150,stock:9}],
+vendors:[{name:'Rajkot Office Mart',contact:'Hiren Patel',email:'sales@rom.example'},{name:'Paper World',contact:'S. Joshi',email:'orders@pw.example'}],
+depts:[{name:'IT',division:'Operations',head:'R. Shah'},{name:'HR & Admin',division:'Operations',head:'M. Dave'},{name:'Accounts',division:'Finance',head:'K. Rana'}],
+emps:[{code:'E001',name:'Vishal',dept:'IT',role:'Requestor'},{code:'E002',name:'A. Mehta',dept:'IT',role:'Reporting Manager'},{code:'E003',name:'N. Joshi',dept:'HR & Admin',role:'HRAD'}]};
+var COLS={items:['code','name','unit','rate','stock'],vendors:['name','contact','email'],depts:['name','division','head'],emps:['code','name','dept','role']};
+function L(a,b,c){return {a:a,who:b,d:c,c:''}}
+var R=[
+{id:42,by:'Vishal',dept:'IT',date:'21 Oct 2026',status:'InReview',stage:'DH',vendor:'',items:[{n:'A4 Paper Ream',u:'Ream',r:280,q:5},{n:'Ball Pen Blue',u:'Nos',r:10,q:20}],hist:[L('Submit','Vishal','21 Oct'),L('Approve (Reporting Manager)','A. Mehta','22 Oct')]},
+{id:41,by:'Priya S.',dept:'Accounts',date:'18 Oct 2026',status:'HRApproval',stage:'HRAD',vendor:'',items:[{n:'Spiral Notebook',u:'Nos',r:60,q:30},{n:'Marker Set',u:'Set',r:150,q:4}],hist:[L('Submit','Priya S.','18 Oct'),L('Approve (Reporting Manager)','K. Rana','18 Oct'),L('Approve (Dept Head)','K. Rana','19 Oct'),L('Approve (Division Head)','F. Desai','20 Oct')]},
+{id:40,by:'Vishal',dept:'IT',date:'12 Oct 2026',status:'Delivered',stage:'Requestor',vendor:'Paper World',items:[{n:'Stapler Pins',u:'Box',r:35,q:10}],hist:[L('Submit','Vishal','12 Oct'),L('Vendor order sent','N. Joshi','15 Oct'),L('Delivered to HRAD','N. Joshi','20 Oct')]},
+{id:39,by:'Vishal',dept:'IT',date:'02 Oct 2026',status:'Closed',stage:'',vendor:'Rajkot Office Mart',items:[{n:'Ball Pen Blue',u:'Nos',r:10,q:50}],hist:[L('Submit','Vishal','02 Oct'),L('Closed','Vishal','09 Oct')]},
+{id:38,by:'R. Shah',dept:'IT',date:'28 Sep 2026',status:'AmendRequired',stage:'Requestor',vendor:'',items:[{n:'Marker Set',u:'Set',r:150,q:12}],hist:[L('Submit','R. Shah','28 Sep'),{a:'Amend',who:'A. Mehta',d:'29 Sep',c:'Reduce marker quantity'}]},
+{id:37,by:'Vishal',dept:'IT',date:'20 Sep 2026',status:'Rejected',stage:'',vendor:'',items:[{n:'A4 Paper Ream',u:'Ream',r:280,q:40}],hist:[L('Submit','Vishal','20 Sep'),{a:'Reject',who:'A. Mehta',d:'21 Sep',c:'Over budget'}]}];
+var S={role:'Requestor',route:'dash',sel:null,tab:'pending',q:'',st:'',lines:[{i:0,q:1}],adm:'items'};
+var IC={dash:'<path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',add:'<path d="M12 5v14M5 12h14"/>',adm:'<circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 0 0-2-1.2L14 3h-4l-.4 2.6a7 7 0 0 0-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-.9a7 7 0 0 0 2 1.2L10 21h4l.4-2.6a7 7 0 0 0 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/>'};
+function ic(k){return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>'}
+function tot(r){return r.items.reduce(function(s,i){return s+i.r*i.q},0)}
+function fm(n){return '₹'+n.toLocaleString('en-IN')}
+function chip(s){return '<span class="chip" style="background:'+ST[s][1]+'">'+ST[s][0]+'</span>'}
+function cur(){return R.filter(function(r){return r.id===S.sel})[0]}
+function toast(t){var e=document.createElement('div');e.className='toast';e.setAttribute('role','status');e.textContent=t;document.body.appendChild(e);setTimeout(function(){e.remove()},2200)}
+function go(r,id){S.route=r;if(id)S.sel=id;location.hash=r;render();window.scrollTo(0,0)}
+function setRole(v){S.role=v;S.tab=v==='Requestor'?'mine':'pending';go('dash')}
+function pend(r){var x=S.role;if(CH.indexOf(x)>-1)return r.status==='InReview'&&r.stage===x;if(x==='HRAD')return r.status==='HRApproval'||r.status==='Ordered';if(x==='Requestor')return r.by==='Vishal'&&(r.status==='Delivered'||r.status==='AmendRequired'||r.status==='Draft');return false}
+function mo(h){$('#mo').innerHTML=h?'<div class="ov" onclick="if(event.target===this)mo()"><div class="mo" role="dialog" aria-modal="true">'+h+'</div></div>':''}
+function shell(){
+var nav=[['dash','Dashboard','dash'],['list','Requests','list'],['new','New request','add']];if(S.role==='Admin')nav.push(['admin','Admin masters','adm']);
+$('#side').innerHTML='<div class="brand"><div class="logo"><svg class="ic" style="stroke:#fff" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16zM14 6l3 3"/></svg></div>Stationery Hub</div>'+nav.map(function(n){var on=S.route===n[0]||(S.route==='detail'&&n[0]==='list');return '<button class="nav'+(on?' on':'')+'" onclick="go(\''+n[0]+'\')">'+ic(n[2])+n[1]+'</button>'}).join('');
+var rl=ROLES.filter(function(r){return r[0]===S.role})[0][1];
+$('#top').innerHTML='<div><div class="crumb">SharePoint › Stationery › '+S.route+'</div></div><div class="who"><label class="mut" for="rs">View as</label><select id="rs" onchange="setRole(this.value)">'+ROLES.map(function(r){return '<option value="'+r[0]+'"'+(r[0]===S.role?' selected':'')+'>'+r[1]+'</option>'}).join('')+'</select><div class="av" title="'+rl+'">'+rl[0]+'</div></div>'}
+function dash(){
+var tc=R.reduce(function(s,r){return s+tot(r)},0),pd=R.filter(pend).length,low=M.items.filter(function(i){return i.stock<=12}).length;
+var K=[['Total requests',R.length,'#6366f1'],['Waiting for me',pd,'#f59e0b'],['Total cost (YTD)',fm(tc+186000),'#10b981'],['Low-stock items',low,'#ef4444']];
+var D=[['IT',82],['HR & Admin',64],['Accounts',41],['Sales',30]],Mo=[['Jun',40],['Jul',55],['Aug',48],['Sep',70],['Oct',62]];
+return '<div class="row" style="justify-content:space-between"><h1>Dashboard</h1><div class="row"><select aria-label="Period"><option>Jan – Oct 2026</option><option>Last 3 months</option></select><select aria-label="Department"><option>All departments</option><option>IT</option></select><button class="btn g" onclick="toast(\'Excel export started (preview)\')">Export Excel</button></div></div>'+
+'<div class="row">'+K.map(function(k){return '<div class="card kpi"><i style="background:'+k[2]+'"></i><span class="mut">'+k[0]+'</span><b>'+k[1]+'</b></div>'}).join('')+'</div>'+
+'<div class="row" style="align-items:stretch"><div class="card grow"><h2>Cost by department (₹ thousand)</h2>'+D.map(function(d){return '<div class="row" style="flex-wrap:nowrap;margin-bottom:10px"><span class="mut" style="width:80px">'+d[0]+'</span><div class="bar" style="width:'+d[1]*3+'px;max-width:55%"></div><b>'+d[1]+'k</b></div>'}).join('')+'</div>'+
+'<div class="card grow"><h2>Monthly cost (₹ thousand)</h2><div class="cols">'+Mo.map(function(m){return '<div><b>'+m[1]+'</b><span style="height:'+m[1]*1.5+'px"></span><small class="mut">'+m[0]+'</small></div>'}).join('')+'</div></div></div>'+
+'<div class="row" style="align-items:stretch"><div class="card grow"><h2>Top items</h2>'+M.items.slice(0,4).map(function(i,x){return '<div class="row" style="flex-wrap:nowrap;margin-bottom:8px"><span style="width:130px">'+i.name+'</span><div class="bar" style="width:'+(160-x*32)+'px"></div></div>'}).join('')+'</div>'+
+'<div class="card grow"><h2>Store availability</h2><div class="tw"><table><thead><tr><th>Item</th><th>In stock</th><th></th></tr></thead><tbody>'+M.items.map(function(i){var lw=i.stock<=12;return '<tr><td>'+i.name+'</td><td>'+i.stock+' '+i.unit+'</td><td>'+(lw?'<span class="chip" style="background:#dc2626">Low</span>':'<span class="chip" style="background:#15803d">OK</span>')+'</td></tr>'}).join('')+'</tbody></table></div></div></div>'}
+function list(){
+var rows=R.filter(function(r){var t=S.tab==='mine'?r.by==='Vishal':S.tab==='pending'?pend(r):true;return t&&(!S.st||r.status===S.st)&&(!S.q||('stn-2026-'+r.id+r.by+r.dept).toLowerCase().indexOf(S.q.toLowerCase())>-1)});
+return '<div class="row" style="justify-content:space-between"><h1>Requests</h1><button class="btn" onclick="go(\'new\')">+ New request</button></div><div class="card"><div class="tabs" role="tablist">'+[['pending','Pending for me'],['mine','My requests'],['all','All']].map(function(t){return '<button class="tab'+(S.tab===t[0]?' on':'')+'" onclick="S.tab=\''+t[0]+'\';render()">'+t[1]+'</button>'}).join('')+'</div>'+
+'<div class="row" style="margin:14px 0"><input id="q" placeholder="Search number, requestor, dept" value="'+S.q+'" oninput="S.q=this.value;clearTimeout(window.T);window.T=setTimeout(render,250)" style="min-width:240px"><select aria-label="Status" onchange="S.st=this.value;render()"><option value="">All statuses</option>'+Object.keys(ST).map(function(k){return '<option value="'+k+'"'+(S.st===k?' selected':'')+'>'+ST[k][0]+'</option>'}).join('')+'</select></div>'+
+'<div class="tw"><table><thead><tr><th>Request no</th><th>Date</th><th>Requestor</th><th>Department</th><th>Amount</th><th>Status</th><th>With</th></tr></thead><tbody>'+(rows.length?rows.map(function(r){return '<tr class="cl" onclick="go(\'detail\','+r.id+')"><td><b>STN-2026-'+('000'+r.id).slice(-5)+'</b></td><td>'+r.date+'</td><td>'+r.by+'</td><td>'+r.dept+'</td><td>'+fm(tot(r))+'</td><td>'+chip(r.status)+'</td><td>'+(SG[r.stage]||'–')+'</td></tr>'}).join(''):'<tr><td colspan="7" class="mut">Nothing here.</td></tr>')+'</tbody></table></div></div>'}
+function frm(){
+var g=0;S.lines.forEach(function(l){g+=M.items[l.i].rate*l.q});
+return '<h1>New stationery request</h1><div class="card"><h2>Requestor details</h2><div class="row">'+[['Requestor','Vishal'],['Department','IT'],['Division','Operations'],['Reporting manager','A. Mehta'],['Date','25 Oct 2026']].map(function(f){return '<div class="fld"><span class="lab">'+f[0]+'</span><input readonly value="'+f[1]+'" style="width:100%"></div>'}).join('')+'</div><span class="lab" style="margin-top:12px">Remarks</span><textarea id="rm" rows="2" style="width:100%" placeholder="Why do you need these items?"></textarea></div>'+
+'<div class="card"><h2>Items</h2><div class="tw"><table><thead><tr><th>#</th><th>Item</th><th>Unit</th><th>Rate</th><th>Qty</th><th>Total</th><th></th></tr></thead><tbody>'+S.lines.map(function(l,x){var it=M.items[l.i];return '<tr><td>'+(x+1)+'</td><td><select aria-label="Item" onchange="S.lines['+x+'].i=+this.value;render()">'+M.items.map(function(o,k){return '<option value="'+k+'"'+(k===l.i?' selected':'')+'>'+o.code+' – '+o.name+'</option>'}).join('')+'</select></td><td>'+it.unit+'</td><td>'+fm(it.rate)+'</td><td><input type="number" min="1" aria-label="Quantity" value="'+l.q+'" style="width:84px" onchange="S.lines['+x+'].q=Math.max(1,+this.value||1);render()"></td><td><b>'+fm(it.rate*l.q)+'</b></td><td><button class="btn g s" aria-label="Remove row" onclick="S.lines.splice('+x+',1);if(!S.lines.length)S.lines=[{i:0,q:1}];render()">✕</button></td></tr>'}).join('')+'</tbody></table></div>'+
+'<div class="row" style="justify-content:space-between;margin-top:14px"><button class="btn g" onclick="S.lines.push({i:0,q:1});render()">+ Add item</button><div style="font-size:18px">Grand total <b>'+fm(g)+'</b></div></div></div>'+
+'<div class="row"><button class="btn g" onclick="saveReq(false)">Save as draft</button><button class="btn" onclick="saveReq(true)">Submit for approval</button><button class="btn g" onclick="go(\'list\')">Cancel</button></div>'}
+function saveReq(sub){var id=R.length?Math.max.apply(null,R.map(function(r){return r.id}))+1:1;
+R.unshift({id:id,by:'Vishal',dept:'IT',date:'25 Oct 2026',status:sub?'InReview':'Draft',stage:sub?'RM':'Requestor',vendor:'',items:S.lines.map(function(l){var i=M.items[l.i];return {n:i.name,u:i.unit,r:i.rate,q:l.q}}),hist:sub?[L('Submit','Vishal','25 Oct')]:[]});
+S.lines=[{i:0,q:1}];S.tab='mine';toast(sub?'Submitted to Reporting Manager':'Draft saved');go('detail',id)}
+function det(){var r=cur(),x=S.role,no='STN-2026-'+('000'+r.id).slice(-5);
+var fut=[];if(r.status==='InReview'){var k=CH.indexOf(r.stage);CH.slice(k).forEach(function(c){fut.push(SG[c]+' approval')});fut.push('HRAD processing')}else if(r.status==='HRApproval'){fut.push('HRAD vendor order')}
+var tl=r.hist.map(function(h){return '<div class="st"><div class="dot" style="background:#15803d"></div><div><b>'+h.a+'</b><div class="mut">'+h.who+' · '+h.d+(h.c?'<br>“'+h.c+'”':'')+'</div></div></div>'}).join('')+fut.map(function(f,i){return '<div class="st"><div class="dot" style="background:'+(i?'var(--line)':'#2563eb')+'"></div><div><b style="color:var(--mut)">'+f+'</b><div class="mut">'+(i?'Upcoming':'Pending now')+'</div></div></div>'}).join('');
+var act='';
+if(r.status==='InReview'&&r.stage===x)act='<h2>Your decision · '+SG[x]+'</h2><textarea id="cm" rows="3" style="width:100%" placeholder="Comments (required for Reject or Amend)"></textarea><div class="row" style="margin-top:10px"><button class="btn" onclick="decide(\'Approve\')">Approve</button><button class="btn g" onclick="decide(\'Amend\')">Ask to amend</button><button class="btn d" onclick="decide(\'Reject\')">Reject</button></div>';
+else if(r.status==='HRApproval'&&x==='HRAD')act='<h2>HRAD processing</h2><div class="row"><div class="fld"><span class="lab">Vendor</span><select id="vn" style="width:100%">'+M.vendors.map(function(v){return '<option>'+v.name+'</option>'}).join('')+'</select></div></div><div class="row" style="margin-top:10px"><button class="btn" onclick="hrad(\'send\')">Send to vendor</button><button class="btn g" onclick="po()">Preview PDF</button></div>';
+else if(r.status==='Ordered'&&x==='HRAD')act='<h2>Vendor order sent to '+r.vendor+'</h2><button class="btn" onclick="hrad(\'del\')">Mark delivered and hand over</button>';
+else if(r.status==='Delivered'&&x==='Requestor'&&r.by==='Vishal')act='<h2>Verify received items</h2><div class="row"><button class="btn" onclick="fin(\'Closed\')">Confirm and close</button><button class="btn g" onclick="fin(\'PartialClosed\')">Partial close</button><button class="btn g" onclick="toast(\'Query emailed to HRAD\')">Raise query</button></div>';
+else if(r.status==='AmendRequired'&&x==='Requestor')act='<h2>Amend requested</h2><button class="btn" onclick="resub()">Edit and resubmit</button>';
+return '<div class="row" style="justify-content:space-between"><div class="row"><button class="btn g s" onclick="go(\'list\')">← Back</button><h1>'+no+'</h1>'+chip(r.status)+'</div><button class="btn g" onclick="po()">PDF</button></div>'+
+'<div class="row" style="align-items:stretch"><div class="card grow" style="flex:2 1 420px"><div class="row mut" style="gap:24px;margin-bottom:12px"><span>Requestor: <b style="color:var(--ink)">'+r.by+'</b></span><span>Dept: <b style="color:var(--ink)">'+r.dept+'</b></span><span>Date: <b style="color:var(--ink)">'+r.date+'</b></span>'+(r.vendor?'<span>Vendor: <b style="color:var(--ink)">'+r.vendor+'</b></span>':'')+'</div><div class="tw"><table><thead><tr><th>Item</th><th>Unit</th><th>Rate</th><th>Qty</th><th>Total</th></tr></thead><tbody>'+r.items.map(function(i){return '<tr><td>'+i.n+'</td><td>'+i.u+'</td><td>'+fm(i.r)+'</td><td>'+i.q+'</td><td>'+fm(i.r*i.q)+'</td></tr>'}).join('')+'</tbody></table></div><div style="text-align:right;margin-top:12px;font-size:18px">Total <b>'+fm(tot(r))+'</b></div></div>'+
+'<div class="card grow"><h2>History</h2><div class="tl">'+tl+'</div></div></div>'+(act?'<div class="card">'+act+'</div>':'')}
+function decide(a){var r=cur(),c=($('#cm').value||'').trim();if(a!=='Approve'&&!c){toast('A comment is required');return}
+r.hist.push({a:a==='Approve'?'Approve ('+SG[r.stage]+')':a,who:ROLES.filter(function(z){return z[0]===S.role})[0][1],d:'25 Oct',c:c});
+if(a==='Approve'){var k=CH.indexOf(r.stage);if(k<2)r.stage=CH[k+1];else{r.status='HRApproval';r.stage='HRAD'}}else if(a==='Reject'){r.status='Rejected';r.stage=''}else{r.status='AmendRequired';r.stage='Requestor'}
+toast(a+' recorded');render()}
+function hrad(k){var r=cur();if(k==='send'){r.vendor=$('#vn').value;r.status='Ordered';r.hist.push(L('Vendor order sent','HRAD','25 Oct'));toast('PO emailed to '+r.vendor)}else{r.status='Delivered';r.stage='Requestor';r.hist.push(L('Delivered to HRAD, handed over','HRAD','25 Oct'));toast('Requestor notified')}render()}
+function fin(s){var r=cur();r.status=s;r.stage='';r.hist.push(L(s==='Closed'?'Closed':'Partial close','Vishal','25 Oct'));toast('Request '+ST[s][0].toLowerCase());render()}
+function resub(){var r=cur();r.status='InReview';r.stage='RM';r.hist.push(L('Resubmit','Vishal','25 Oct'));toast('Resubmitted');render()}
+function po(){var r=cur();mo('<h2>Purchase order preview</h2><div class="card" style="background:#fff;color:#111"><b>PURCHASE ORDER · PO-STN-2026-'+('000'+r.id).slice(-5)+'</b><div style="font-size:12px;margin:6px 0">Vendor: '+(r.vendor||'(select vendor)')+'</div><table style="color:#111"><tbody>'+r.items.map(function(i){return '<tr><td>'+i.n+'</td><td>'+i.q+' '+i.u+'</td><td>'+fm(i.r*i.q)+'</td></tr>'}).join('')+'</tbody></table><b>Total '+fm(tot(r))+'</b></div><button class="btn" style="margin-top:12px" onclick="mo()">Close</button>')}
+function adm(){var k=S.adm,c=COLS[k];
+return '<div class="row" style="justify-content:space-between"><h1>Master data</h1><button class="btn" onclick="addM()">+ Add</button></div><div class="card"><div class="tabs">'+[['items','Items'],['vendors','Vendors'],['depts','Departments'],['emps','Employees']].map(function(t){return '<button class="tab'+(k===t[0]?' on':'')+'" onclick="S.adm=\''+t[0]+'\';render()">'+t[1]+'</button>'}).join('')+'</div><div class="tw"><table><thead><tr>'+c.map(function(x){return '<th>'+x+'</th>'}).join('')+'<th>Active</th></tr></thead><tbody>'+M[k].map(function(r,i){return '<tr>'+c.map(function(x){return '<td>'+r[x]+'</td>'}).join('')+'<td><input type="checkbox" aria-label="Active" checked></td></tr>'}).join('')+'</tbody></table></div></div>'}
+function addM(){var k=S.adm;mo('<h2>Add to '+k+'</h2>'+COLS[k].map(function(x){return '<span class="lab">'+x+'</span><input id="f_'+x+'" style="width:100%;margin-bottom:8px">'}).join('')+'<div class="row"><button class="btn" onclick="saveM()">Save</button><button class="btn g" onclick="mo()">Cancel</button></div>')}
+function saveM(){var k=S.adm,o={};COLS[k].forEach(function(x){var v=$('#f_'+x).value;o[x]=(x==='rate'||x==='stock')?+v||0:v||'–'});M[k].push(o);mo();toast('Saved');render()}
+function render(){shell();var v={dash:dash,list:list,new:frm,detail:det,admin:adm}[S.route]||dash;$('#app').innerHTML=v();var q=$('#q');if(q&&document.activeElement===document.body&&S.q){q.focus();q.setSelectionRange(S.q.length,S.q.length)}}
+var h=(location.hash||'').slice(1);if(['dash','list','new','admin'].indexOf(h)>-1)S.route=h;
+window.addEventListener('hashchange',function(){var n=location.hash.slice(1);if(['dash','list','new','admin'].indexOf(n)>-1&&n!==S.route){S.route=n;render()}});
+render();
+</script>
+</body>
+</html>
